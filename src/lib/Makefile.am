@@ -28,9 +28,9 @@ grinclude_HEADERS =		\
 
 ###################################
 # SWIG Python interface and library
-
+#Name this carefully as it may overwrite the main cc file
 TOP_SWIG_IFILES = 		\
-	gr_ofdm_mapper_bcv.i
+	gr_ofdm.i
 
 # Install so that they end up available as:
 #   import gnuradio.mapper
