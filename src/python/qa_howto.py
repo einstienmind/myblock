@@ -21,7 +21,7 @@
 # 
 
 from gnuradio import gr, gr_unittest
-import howto
+import gr_ofdm
 
 class qa_howto (gr_unittest.TestCase):
 

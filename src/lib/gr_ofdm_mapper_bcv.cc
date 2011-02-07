@@ -92,6 +92,8 @@ gr_ofdm_mapper_bcv::gr_ofdm_mapper_bcv (const std::vector<gr_complex> &constella
         carriers.insert(carriers.length(), c);
   }
   
+
+cout << carriers<< " len: "<<carriers.length() << endl;
   // find out how many zeros to pad on the sides; the difference between the fft length and the subcarrier
   // mapping size in chunks of four. This is the number to pack on the left and this number plus any 
   // residual nulls (if odd) will be packed on the right. 
@@ -120,30 +122,32 @@ gr_ofdm_mapper_bcv::gr_ofdm_mapper_bcv (const std::vector<gr_complex> &constella
 //New code starts here
 /////////////////////////////////////////////////////////////////////////////////////
 
-
-gr_ofdm_mapper_bcv::set_new_carriermap(std::string carrier_map,unsigned int occupied_carriers)
+int 
+gr_ofdm_mapper_bcv::set_new_carriermap(std::string carrier_map)
 {
-  
-  diff = (d_fft_length/4 - carrier_map.length())/2; 
-  d_subcarrier_map.clear();
+ 
+ printf("It works");
+ return 0; 
+ // diff = (d_fft_length/4 - carrier_map.length())/2; 
+ // d_subcarrier_map.clear();
 
-  unsigned int i,j,k;
-  for(i = 0; i < carrier_map.length(); i++) {
-    char c = carrier_map[i];                            // get the current hex character from the string
-    for(j = 0; j < 4; j++) {                         // walk through all four bits
-      k = (strtol(&c, NULL, 16) >> (3-j)) & 0x1;     // convert to int and extract next bit
-      if(k) {                                        // if bit is a 1, 
-	d_subcarrier_map.push_back(4*(i+diff) + j);  // use this subcarrier
-      }
-    }
-  }
+ // unsigned int i,j,k;
+ // for(i = 0; i < carrier_map.length(); i++) {
+ //   char c = carrier_map[i];                            // get the current hex character from the string
+ //   for(j = 0; j < 4; j++) {                         // walk through all four bits
+ //     k = (strtol(&c, NULL, 16) >> (3-j)) & 0x1;     // convert to int and extract next bit
+ //     if(k) {                                        // if bit is a 1, 
+ //       d_subcarrier_map.push_back(4*(i+diff) + j);  // use this subcarrier
+ //     }
+ //   }
+ // }
 
-  // make sure we stay in the limit currently imposed by the occupied_carriers
-  if(d_subcarrier_map.size() > d_occupied_carriers) {
-    throw std::invalid_argument("gr_ofdm_mapper_bcv: subcarriers allocated exceeds size of occupied carriers");
-  }
-  
-  d_nbits = (unsigned long)ceil(log10(d_constellation.size()) / log10(2.0));
+ // // make sure we stay in the limit currently imposed by the occupied_carriers
+ // if(d_subcarrier_map.size() > d_occupied_carriers) {
+ //   throw std::invalid_argument("gr_ofdm_mapper_bcv: subcarriers allocated exceeds size of occupied carriers");
+ // }
+ // 
+ // d_nbits = (unsigned long)ceil(log10(d_constellation.size()) / log10(2.0));
   
   
   
@@ -181,7 +185,8 @@ gr_ofdm_mapper_bcv::work(int noutput_items,
   gr_complex *out = (gr_complex *)output_items[0];
   
   unsigned int i=0;
-
+	//badmash
+  cout << carriers<< " len: "<<carriers.length() << endl;
   //printf("OFDM BPSK Mapper:  ninput_items: %d   noutput_items: %d\n", ninput_items[0], noutput_items);
 
   if(d_eof) {

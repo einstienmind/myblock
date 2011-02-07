@@ -72,11 +72,13 @@ class gr_ofdm_mapper_bcv : public gr_sync_block
   std::vector<int> d_subcarrier_map;
 
   int randsym();
-
+  
  public:
   ~gr_ofdm_mapper_bcv(void);
 
   gr_msg_queue_sptr	msgq() const { return d_msgq; }
+
+  int set_new_carriermap(std::string carrier_map);
 
   int work(int noutput_items,
 	   gr_vector_const_void_star &input_items,
